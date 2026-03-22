@@ -1,3 +1,7 @@
+from uuid import uuid4
+from functools import wraps
+import os
+
 from flask import (
     flash,
     Flask,
@@ -7,10 +11,6 @@ from flask import (
     session,
     url_for,
 )
-
-from uuid import uuid4
-
-from functools import wraps
 
 from todos.utils import (
     delete_todo_by_id,
@@ -169,7 +169,7 @@ def update_list(lst, list_id):
     session.modified = True
     return redirect(url_for('edit_list', list_id=list_id))
 
-
-
 if __name__ == "__main__":
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.run(debug=False)
     app.run(debug=True, port=5003)
