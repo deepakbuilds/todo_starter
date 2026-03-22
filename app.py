@@ -12,7 +12,18 @@ from uuid import uuid4
 
 from functools import wraps
 
-from todos.utils import error_for_list_title, find_list_by_id, error_for_todo, find_todo_by_id, delete_todo_by_id, mark_all_completed, todos_remaining, is_list_completed, is_todo_completed, sort_items
+from todos.utils import (
+    delete_todo_by_id,
+    error_for_list_title,
+    error_for_todo,
+    find_list_by_id,
+    find_todo_by_id,
+    is_list_completed,
+    is_todo_completed,
+    mark_all_completed,
+    sort_items,
+    todos_remaining,
+)
 
 from werkzeug.exceptions import NotFound
 
@@ -98,7 +109,7 @@ def create_todo(list_id, lst):
     error = error_for_todo(todo_title)
     if error:
         flash(error, "error")
-        return render_template("list.html", lst=lst)
+        return render_template("list.html", lst=lst, todo=todo_title)
     lst['todos'].append({
         'id': str(uuid4()),
         'title': todo_title,
